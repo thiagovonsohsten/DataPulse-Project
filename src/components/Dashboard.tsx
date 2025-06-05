@@ -1,6 +1,10 @@
 import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, PieChart, Pie, Cell, ResponsiveContainer, Legend } from 'recharts';
+import { 
+  BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, 
+  PieChart, Pie, Cell, ResponsiveContainer, Legend,
+  LineChart, Line, AreaChart, Area
+} from 'recharts';
 import { getPlatformTotals, getSegmentData, getQuestionSummary } from '../utils/transformData';
 
 interface DashboardProps {
@@ -8,13 +12,19 @@ interface DashboardProps {
   filteredData: any[];
 }
 
-const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#8884D8'];
+const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#8884D8', '#82ca9d', '#ffc658'];
 
 const Dashboard: React.FC<DashboardProps> = ({ data, filteredData }) => {
   const platformTotals = getPlatformTotals(filteredData);
   const genderData = getSegmentData(filteredData, 'Gender');
   const universityData = getSegmentData(filteredData, 'University');
   const question = getQuestionSummary(data);
+
+  // Calcular estatísticas gerais
+  const totalResponses = filteredData.length;
+  const uniquePlatforms = new Set(filteredData.map(item => item.Answer)).size;
+  const topPlatform = platformTotals[0]?.platform || 'N/A';
+  const topPlatformCount = platformTotals[0]?.count || 0;
 
   const renderCustomizedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, percent, index }) => {
     const RADIAN = Math.PI / 180;
@@ -43,6 +53,45 @@ const Dashboard: React.FC<DashboardProps> = ({ data, filteredData }) => {
         <p className="text-gray-600 text-lg">{question}</p>
       </div>
 
+      {/* Cards de Estatísticas */}
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+        <Card>
+          <CardHeader className="pb-2">
+            <CardTitle className="text-sm font-medium">Total de Respostas</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold">{totalResponses}</div>
+          </CardContent>
+        </Card>
+        <Card>
+          <CardHeader className="pb-2">
+            <CardTitle className="text-sm font-medium">Plataformas Únicas</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold">{uniquePlatforms}</div>
+          </CardContent>
+        </Card>
+        <Card>
+          <CardHeader className="pb-2">
+            <CardTitle className="text-sm font-medium">Plataforma Mais Popular</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold">{topPlatform}</div>
+            <p className="text-xs text-gray-500">{topPlatformCount} respostas</p>
+          </CardContent>
+        </Card>
+        <Card>
+          <CardHeader className="pb-2">
+            <CardTitle className="text-sm font-medium">Taxa de Engajamento</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold">
+              {((topPlatformCount / totalResponses) * 100).toFixed(1)}%
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+
       {/* Gráfico de Barras - Plataformas */}
       <Card>
         <CardHeader>
@@ -64,7 +113,7 @@ const Dashboard: React.FC<DashboardProps> = ({ data, filteredData }) => {
         </CardContent>
       </Card>
 
-      {/* Gráficos de Pizza - Gênero */}
+      {/* Gráficos de Pizza e Barras */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <Card>
           <CardHeader>
@@ -129,6 +178,29 @@ const Dashboard: React.FC<DashboardProps> = ({ data, filteredData }) => {
           </CardContent>
         </Card>
       </div>
+
+      {/* Gráfico de Área - Tendências */}
+      <Card>
+        <CardHeader>
+          <CardTitle>Tendências de Uso por Plataforma</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="h-[300px]">
+            <ResponsiveContainer width="100%" height="100%">
+              <AreaChart
+                data={platformTotals}
+                margin={{ top: 10, right: 30, left: 0, bottom: 0 }}
+              >
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis dataKey="platform" />
+                <YAxis />
+                <Tooltip />
+                <Area type="monotone" dataKey="count" stroke="#8884d8" fill="#8884d8" />
+              </AreaChart>
+            </ResponsiveContainer>
+          </div>
+        </CardContent>
+      </Card>
     </div>
   );
 };
