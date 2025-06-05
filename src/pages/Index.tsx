@@ -32,8 +32,8 @@ const Index = () => {
     try {
       setLoading(true);
       
-      // Simular carregamento de CSV (em produção seria fetch do arquivo real)
-      const response = await fetch('/src/data/WhatsgoodlyData-6.csv');
+      // Carregando CSV da pasta public
+      const response = await fetch('/data/WhatsgoodlyData-6.csv');
       const csvText = await response.text();
       
       Papa.parse(csvText, {
