@@ -2,7 +2,7 @@
 
 ## 📊 Sobre o Projeto
 
-DataPulse é uma aplicação web moderna para análise interativa de dados de redes sociais, com foco especial na Geração Z. A plataforma permite carregar, visualizar, filtrar e exportar dados de forma intuitiva e eficiente.
+DataPulse é uma aplicação web moderna para análise interativa de dados de redes sociais, com foco especial na Geração Z. A plataforma permite carregar, visualizar, filtrar e exportar dados de forma intuitiva e eficiente, com interface totalmente em português.
 
 ## 🚀 Tecnologias Utilizadas
 
@@ -15,6 +15,7 @@ DataPulse é uma aplicação web moderna para análise interativa de dados de re
 - React Router
 - Recharts
 - Papa Parse (para processamento CSV)
+- jsPDF (para exportação em PDF)
 
 ## 🛠️ Instalação
 
@@ -44,31 +45,50 @@ bun dev
 ## 📋 Processo de Análise de Dados
 
 ### 1. Carregamento de Dados
-- A aplicação carrega dados de um arquivo CSV localizado em `src/data/`
+- A aplicação carrega dados de um arquivo CSV localizado em `src/data`
 - Utiliza Papa Parse para processamento eficiente de arquivos CSV
 - Implementa tratamento de erros e feedback visual durante o carregamento
+- Suporte a múltiplos formatos de dados e normalização automática
 
 ### 2. Transformação de Dados
 - Os dados brutos são transformados em um formato otimizado para visualização
 - Processo de limpeza e normalização dos dados
 - Estruturação em objetos TypeScript tipados
+- Tradução automática de campos para português
+- Normalização de valores (ex: gênero, plataformas)
 
 ### 3. Sistema de Filtros
 - Filtros por tipo de segmento
 - Filtros por descrição do segmento
 - Filtros por respostas
 - Sistema de filtros dependentes (filtros em cascata)
+- Interface intuitiva com feedback visual
+- Botão de limpar filtros
 
 ### 4. Visualização de Dados
 - Dashboard interativo com múltiplos gráficos
+- Sistema de abas para organização das visualizações:
+  - Visão Geral
+  - Plataformas
+  - Demografia
+  - Tendências
+- Gráficos responsivos usando Recharts:
+  - Gráfico de Barras para plataformas mais utilizadas
+  - Gráfico de Radar para distribuição de popularidade
+  - Gráfico de Dispersão para análise de engajamento
+  - Gráfico de Pizza para distribuição por gênero
+  - Gráfico de Linha para análise de tendências
+  - Gráfico de Área para comparação de crescimento
 - Tabela de dados com paginação
-- Gráficos responsivos usando Recharts
-- Visualizações específicas para diferentes tipos de dados
+- Tooltips informativos em todos os gráficos
+- Legendas interativas
 
 ### 5. Exportação de Dados
-- Exportação para CSV
-- Exportação para PDF
+- Exportação para CSV com formatação adequada
+- Exportação para PDF com layout profissional
 - Opção de exportar dados filtrados ou completos
+- Nomes de arquivos com data de geração
+- Feedback visual do processo de exportação
 
 ## 📊 Componentes Principais
 
@@ -76,46 +96,62 @@ bun dev
 - Interface para aplicação de filtros
 - Filtros dinâmicos baseados nos dados disponíveis
 - Botão de limpar filtros
+- Feedback visual da seleção
+- Suporte a filtros dependentes
 
 ### Dashboard
-- Visualizações gráficas interativas
-- Gráficos de barras, pizza e linha
-- Estatísticas resumidas
+- Visualizações gráficas interativas organizadas em abas
+- Gráficos de barras, pizza, radar, dispersão, linha e área
+- Estatísticas resumidas em cards
+- Tooltips informativos
+- Legendas interativas
+- Responsividade em diferentes tamanhos de tela
 
 ### DataTable
 - Tabela paginada com dados
 - Ordenação por colunas
+- Filtros por coluna
 - Visualização responsiva
+- Formatação de números e percentuais
+- Indicadores de ordenação
 
 ### ExportButtons
 - Interface para exportação de dados
-- Múltiplos formatos de exportação
+- Múltiplos formatos de exportação (CSV, PDF)
 - Feedback visual do processo
+- Contagem de registros a serem exportados
+- Nomes de arquivos com data
 
 ## 🔄 Fluxo de Dados
 
 1. **Carregamento Inicial**
    - Leitura do arquivo CSV
    - Transformação dos dados
+   - Tradução automática de campos
    - Armazenamento no estado da aplicação
 
 2. **Processamento de Filtros**
    - Aplicação de filtros selecionados
    - Atualização dinâmica das visualizações
    - Manutenção da performance com React Query
+   - Feedback visual das mudanças
 
 3. **Visualização**
    - Renderização de gráficos
    - Atualização da tabela
    - Feedback em tempo real
+   - Tooltips informativos
 
 ## 🎨 Interface do Usuário
 
 - Design moderno e responsivo
-- Tema claro/escuro
+- Interface totalmente em português
 - Feedback visual para todas as ações
 - Loading states e mensagens de erro
 - Interface intuitiva e acessível
+- Tooltips informativos
+- Animações suaves
+- Cores consistentes e agradáveis
 
 ## 📈 Análise de Dados
 
@@ -127,12 +163,14 @@ bun dev
   - Validação da estrutura dos dados
   - Tratamento de valores nulos ou inválidos
   - Normalização de formatos (datas, números, textos)
+  - Tradução automática de campos
 
 - **Transformação Inicial**
   - Conversão de tipos de dados
   - Padronização de categorias
   - Criação de campos derivados
   - Agregação de dados similares
+  - Normalização de valores
 
 #### 1.2 Análise Exploratória
 - **Análise Descritiva**
@@ -140,12 +178,14 @@ bun dev
   - Distribuição de frequências
   - Identificação de outliers
   - Correlações entre variáveis
+  - Visualizações interativas
 
 - **Segmentação de Dados**
   - Agrupamento por demografia
   - Análise por faixa etária
   - Comportamento por rede social
   - Padrões de uso e preferências
+  - Filtros dinâmicos
 
 ### 2. Visualizações e Insights
 
@@ -153,27 +193,18 @@ bun dev
 - **Gráficos de Distribuição**
   - Gráficos de barras para comparação direta
   - Gráficos de pizza para proporções
-  - Histogramas para distribuição de frequências
-  - Box plots para análise de dispersão
-
-- **Análise Temporal**
+  - Gráficos de radar para distribuição
+  - Gráficos de dispersão para correlações
   - Gráficos de linha para tendências
   - Gráficos de área para volume
-  - Heatmaps para padrões temporais
-  - Comparativos período a período
 
 #### 2.2 Análises Específicas
 - **Análise de Redes Sociais**
   - Preferências por plataforma
   - Frequência de uso
   - Padrões de engajamento
-  - Comportamento por faixa etária
-
-- **Análise de Conteúdo**
-  - Tipos de conteúdo mais consumidos
-  - Temas mais populares
-  - Padrões de compartilhamento
-  - Sentimento das interações
+  - Comportamento por demografia
+  - Tendências temporais
 
 ### 3. Métricas e KPIs
 
@@ -183,25 +214,14 @@ bun dev
   - Tempo médio de uso
   - Frequência de acesso
   - Padrões de compartilhamento
+  - Análise de tendências
 
 - **Preferências**
   - Plataformas mais utilizadas
   - Tipos de conteúdo preferidos
   - Horários de maior atividade
   - Padrões de consumo
-
-#### 3.2 Análise Comparativa
-- **Comparativos Demográficos**
-  - Diferenças por gênero
-  - Variações por faixa etária
-  - Padrões regionais
-  - Influências culturais
-
-- **Análise de Tendências**
-  - Evolução temporal
-  - Mudanças de comportamento
-  - Novos padrões emergentes
-  - Previsões baseadas em dados históricos
+  - Comparativos demográficos
 
 ### 4. Processamento e Otimização
 
@@ -211,25 +231,14 @@ bun dev
   - Agrupamentos dinâmicos
   - Cálculos em tempo real
   - Otimização de consultas
+  - Cache de resultados
 
 - **Filtragem Avançada**
   - Filtros combinados
   - Busca por padrões
   - Exclusão de outliers
   - Normalização de dados
-
-#### 4.2 Performance e Escalabilidade
-- **Otimização de Consultas**
-  - Índices de busca
-  - Cache de resultados
-  - Lazy loading de dados
-  - Paginação eficiente
-
-- **Processamento em Tempo Real**
-  - Atualizações dinâmicas
-  - Cálculos sob demanda
-  - Feedback imediato
-  - Sincronização de dados
+  - Feedback visual
 
 ### 5. Exportação e Relatórios
 
@@ -239,25 +248,14 @@ bun dev
   - Dados processados
   - Dados filtrados
   - Metadados
+  - Formatação adequada
 
 - **PDF**
   - Relatórios formatados
   - Gráficos e visualizações
   - Análises detalhadas
   - Documentação técnica
-
-#### 5.2 Personalização
-- **Filtros de Exportação**
-  - Seleção de campos
-  - Filtros temporais
-  - Agrupamentos
-  - Formatação personalizada
-
-- **Templates**
-  - Layouts predefinidos
-  - Estilos personalizados
-  - Configurações salvas
-  - Exportação em lote
+  - Layout profissional
 
 ## 🔒 Segurança e Performance
 
@@ -266,6 +264,8 @@ bun dev
 - Otimização de performance
 - Lazy loading de componentes
 - Caching de dados
+- Feedback visual de erros
+- Mensagens em português
 
 ## 🤝 Contribuição
 
@@ -278,5 +278,3 @@ bun dev
 ## 📝 Licença
 
 Este projeto está sob a licença MIT. Veja o arquivo [LICENSE](LICENSE) para mais detalhes.
-
-
