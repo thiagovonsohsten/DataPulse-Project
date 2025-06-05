@@ -33,7 +33,7 @@ const Index = () => {
       setLoading(true);
       
       // Carregando CSV da pasta public
-      const response = await fetch('/data/WhatsgoodlyData-6.csv');
+      const response = await fetch('/WhatsgoodlyData-6.csv');
       const csvText = await response.text();
       
       Papa.parse(csvText, {
